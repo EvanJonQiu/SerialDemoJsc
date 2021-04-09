@@ -18,8 +18,10 @@ public class App implements Runnable {
     DataInputStream in;
     private boolean checkLoop = false;
     
+    private int count = 0;
+    
     final SerialWrapper serialWrapper = new SerialWrapper();
-    final SerialPort serialPort = serialWrapper.openComPort("COM1", 115200, 8, 1, 0);
+    final SerialPort serialPort = serialWrapper.openComPort("COM2", 115200, 8, 1, 0);
     
     public void run() {
         BufferedReader into = new BufferedReader(new InputStreamReader(System.in));
@@ -37,10 +39,10 @@ public class App implements Runnable {
                     return;
                 
                 byte[] bytes = serialWrapper.readData(serialPort);
-                System.out.println("收到的数据长度："+bytes.length);
                 System.out.println("收到的数据："+ new String(bytes));
+                count++;
+                System.out.println("count: " + count);
             }
-            
         });
         
         while(!checkLoop) {
